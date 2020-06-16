@@ -53,18 +53,18 @@ function handleChoiceClick(event){
   if(event.target.tagName === 'IMG'){
     totalClicks++;
 
+    var targetSrc = event.target.getAttribute('src');
+    for(var i = 0; i < productsCollection.length; i++){
+      if (productsCollection[i].imgSrc === targetSrc){
+        // console.log('it was', productsCollection[i]);
+        productsCollection[i].clicked++;
+      }
+    }
+
     if (totalClicks === maxClicks){
       alert('Thanks for your input!  Take a look at the results to your left.')
       productImgSection.removeEventListener('click', handleChoiceClick);
       printResults();
-    }
-    
-    var targetSrc = event.target.getAttribute('src');
-    for(var i = 0; i < productsCollection.length; i++){
-      if (productsCollection[i].imgSrc === targetSrc){
-        console.log('it was', productsCollection[i]);
-        productsCollection[i].clicked++;
-      }
     }
     
   } else {

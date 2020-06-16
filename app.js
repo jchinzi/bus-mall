@@ -100,18 +100,23 @@ function handleChoiceClick(event){
 
 function displayInitialProducts(){
 
+  fillRandomArray();
+  leftProductIndex = randomArray[0];
+  centerProductIndex = randomArray[1];
+  rightProductIndex = randomArray[2];
+
   var productDisplayWindow = document.getElementById('products');
 
   //Left Product
   var figureElement = document.createElement('figure');
 
   var leftproductImage = document.createElement('IMG');
-  leftproductImage.src = Product.collection[0].imgSrc;
+  leftproductImage.src = Product.collection[leftProductIndex].imgSrc;
   leftproductImage.id = 'left-img';
   figureElement.appendChild(leftproductImage);
 
   var leftproductTitle = document.createElement('figcaption');
-  leftproductTitle.textContent = Product.collection[0].productName;
+  leftproductTitle.textContent = Product.collection[leftProductIndex].productName;
   leftproductTitle.id = 'left-text';
   figureElement.appendChild(leftproductTitle);
 
@@ -121,12 +126,12 @@ function displayInitialProducts(){
 figureElement = document.createElement('figure');
 
 var centerProductImage = document.createElement('IMG');
-centerProductImage.src = Product.collection[1].imgSrc;
+centerProductImage.src = Product.collection[centerProductIndex].imgSrc;
 centerProductImage.id = 'center-img';
 figureElement.appendChild(centerProductImage);
 
 var centerProductTitle = document.createElement('figcaption');
-centerProductTitle.textContent = Product.collection[1].productName;
+centerProductTitle.textContent = Product.collection[centerProductIndex].productName;
 centerProductTitle.id = 'center-text';
 figureElement.appendChild(centerProductTitle);
 
@@ -136,12 +141,12 @@ productDisplayWindow.appendChild(figureElement);
 figureElement = document.createElement('figure');
 
 var rightproductImage = document.createElement('IMG');
-rightproductImage.src = Product.collection[2].imgSrc;
+rightproductImage.src = Product.collection[rightProductIndex].imgSrc;
 rightproductImage.id = 'right-img';
 figureElement.appendChild(rightproductImage);
 
 var rightproductTitle = document.createElement('figcaption');
-rightproductTitle.textContent = Product.collection[2].productName;
+rightproductTitle.textContent = Product.collection[rightProductIndex].productName;
 rightproductTitle.id = 'right-text';
 figureElement.appendChild(rightproductTitle);
 

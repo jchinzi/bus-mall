@@ -1,0 +1,27 @@
+* {
+  /* border: 1px black solid; */
+}
+
+h1, h2 {
+  text-align: center;
+}
+
+#mainPage article {
+  float: left;
+  width: 20%;
+}
+
+figure {
+  float: left;
+  width: 18%;
+  border: 1px black solid;
+  padding: 10px;
+}
+
+img {
+  width: 100%;
+}
+
+#textBlock {
+  display: inline-block;
+}

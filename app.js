@@ -3,6 +3,7 @@
 Product.collection = [];
 var totalClicks = 0;
 var maxClicks = 25;
+var randomArray = []
 
 // ===========================Basic Functions===========================
 
@@ -43,6 +44,28 @@ new Product('img/water-can.jpg', 'Self-Watering Can');
 new Product('img/wine-glass.jpg', 'Terrarium Style Wine Glass');
 
 console.log('Product Collection',Product.collection);
+
+// ===========================Random Array Function===========================
+
+function fillRandomArray(){
+
+  randomArray = [];
+
+  while (randomArray.length<3){
+
+    var randomIndex = Math.floor(Math.random() * Product.collection.length);
+
+    if (randomArray.indexOf(randomIndex) !== -1){
+      var randomIndex = Math.floor(Math.random() * Product.collection.length);
+    } else {
+    randomArray.push(randomIndex)
+    }
+  }
+}
+
+fillRandomArray();
+// console.log('Random Array', randomArray);
+
 
 // ===========================Event Listener===========================
 

@@ -68,6 +68,7 @@ fillRandomArray();
 console.log('Primary Array', randomArray)
 
 // ===========================Reroll Random Array Function===========================
+// https://www.javascripttutorial.net/javascript-array-splice/
 
 function rerollRandomArray(){
 
@@ -98,7 +99,6 @@ function handleChoiceClick(event){
     var targetSrc = event.target.getAttribute('src');
     for(var i = 0; i < Product.collection.length; i++){
       if (Product.collection[i].imgSrc === targetSrc){
-        // console.log('it was', Product.collection[i]);
         Product.collection[i].clicked++;
       }
     }
@@ -106,7 +106,9 @@ function handleChoiceClick(event){
     if (totalClicks === maxClicks){
       alert('Thanks for your input!  Take a look at the results to your left.')
       productImgSection.removeEventListener('click', handleChoiceClick);
+      // toggleResults();
       printResults();
+      renderResultsChart();
     }
     
   } else {
@@ -227,4 +229,76 @@ function printResults(){
   }
 
 }
+// ==================================Bar Graph========================================
 
+function renderResultsChart(){
+
+  var chartLabels = [];
+  for (var i = 0; i < Product.collection.length; i++){
+    chartLabels.push(Product.collection[i].productName)
+  }
+
+  var clicksData = [];
+  for (var i = 0; i < Product.collection.length; i++){
+    clicksData.push(Product.collection[i].clicked)
+  }
+
+  var shownData = [];
+  for (var i = 0; i < Product.collection.length; i++){
+    shownData.push(Product.collection[i].shown)
+  }
+
+  var ctx = document.getElementById('myChart').getContext('2d');
+  var chart = new Chart(ctx, {
+    // The type of chart we want to create
+    type: 'bar',
+    
+    // The data for our dataset
+    data: {
+      labels: chartLabels,
+      datasets: [{
+        label: 'Times Displayed',
+        backgroundColor: 'light gray',
+        borderColor: 'dark gray',
+        data: shownData,
+      },
+
+      {
+        label: 'Times Chosen',
+        backgroundColor: 'gold',
+        borderColor: 'silver',
+        data: clicksData,
+      }]
+
+    },
+    
+    // Configuration options go here
+    options: {}
+  });
+}
+
+// ==================================Toggle Visibility========================================
+// https://www.washington.edu/accesscomputing/webd2/student/unit5/module2/lesson5.html
+
+// function toggleResults() {
+
+//   var results = document.getElementById('resultsArticle');
+//   var intro = document.getElementById('intro');
+  
+//   if(displaySetting == 'block'){
+//     results.style.display='none';
+//   } else {
+//     results.style.display='block';
+//   }
+
+
+  // var displaySetting = results.style.display;
+  // var introSetting = intro.style.display;
+
+  // if(introSetting == 'block'){
+  //   results.style.display='none';
+  // } else {
+  //   results.style.display='block';
+  // }
+
+// }

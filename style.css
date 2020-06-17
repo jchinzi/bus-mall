@@ -1,5 +1,5 @@
 * {
-  /* border: 1px black solid; */
+  border: 1px black solid;
   box-sizing: border-box;
 }
 
@@ -7,9 +7,16 @@ h1, h2 {
   text-align: center;
 }
 
-#mainPage article {
+#resultsColumn {
+  overflow: hidden;
+  background-color: lightblue;
   float: left;
   width: 25%;
+}
+
+/* #resultsColumn article {
+  float: left;
+  width: 25%; */
 }
 
 #resultsArticle {
@@ -38,4 +45,11 @@ img {
 #mychart {
   margin-left: auto;
   margin-right: auto;
+}
+
+#intro {
+  overflow: hidden;
+  background-color: lightpink;
+  float: right;
+  width: 75%;
 }

@@ -99,7 +99,6 @@ function handleChoiceClick(event){
     var targetSrc = event.target.getAttribute('src');
     for(var i = 0; i < Product.collection.length; i++){
       if (Product.collection[i].imgSrc === targetSrc){
-        // console.log('it was', Product.collection[i]);
         Product.collection[i].clicked++;
       }
     }
@@ -107,6 +106,7 @@ function handleChoiceClick(event){
     if (totalClicks === maxClicks){
       alert('Thanks for your input!  Take a look at the results to your left.')
       productImgSection.removeEventListener('click', handleChoiceClick);
+      // toggleResults();
       printResults();
       renderResultsChart();
     }
@@ -277,4 +277,28 @@ function renderResultsChart(){
   });
 }
 
-renderResultsChart();
+// ==================================Toggle Visibility========================================
+// https://www.washington.edu/accesscomputing/webd2/student/unit5/module2/lesson5.html
+
+// function toggleResults() {
+
+//   var results = document.getElementById('resultsArticle');
+//   var intro = document.getElementById('intro');
+  
+//   if(displaySetting == 'block'){
+//     results.style.display='none';
+//   } else {
+//     results.style.display='block';
+//   }
+
+
+  // var displaySetting = results.style.display;
+  // var introSetting = intro.style.display;
+
+  // if(introSetting == 'block'){
+  //   results.style.display='none';
+  // } else {
+  //   results.style.display='block';
+  // }
+
+// }

@@ -2,9 +2,18 @@
 
 Product.collection = [];
 var totalClicks = 0;
-var maxClicks = 25;
+var maxClicks = 5;
 var randomArray = [];
 var altRandomArray = [];
+
+var stringyPriorVotes = localStorage.getItem('priorVotes');
+var priorVotes = JSON.parse(stringyPriorVotes);
+
+if(priorVotes){
+  Product.collection = priorVotes;
+} else {
+  createProductLine();
+}
 
 // ===========================Basic Functions===========================
 
@@ -23,26 +32,28 @@ function Product(imgSrc, productName){
   Product.collection.push(this);
 }
 
-new Product('img/bag.jpg', 'Robot Suitcase');
-new Product('img/banana.jpg', 'Banana Slicer');
-new Product('img/bathroom.jpg', '2-in-1 Tablet Holder and Toilet Paper Dispenser');
-new Product('img/boots.jpg', 'Toeless Boots');
-new Product('img/breakfast.jpg', 'All in One Breakfast Maker');
-new Product('img/bubblegum.jpg', 'Meatball Bubblegum');
-new Product('img/chair.jpg', 'Standing Chair');
-new Product('img/cthulhu.jpg', 'Cthulhu Figurine');
-new Product('img/dog-duck.jpg', 'Dog Bill');
-new Product('img/dragon.jpg', 'Dragon Meat, 19oz');
-new Product('img/pen.jpg', 'Cutlery Pens');
-new Product('img/pet-sweep.jpg', 'Animal Powered Debris Removal System');
-new Product('img/scissors.jpg', 'Pizza Scissors');
-new Product('img/shark.jpg', 'Great White Sleeping Bag');
-new Product('img/sweep.png', 'Infant Powered Debris Removal System');
-new Product('img/tauntaun.jpg', 'Eviscerated Tauntaun Sleeping Bag');
-new Product('img/unicorn.jpg', 'Unicorn Meat, 5.5oz');
-new Product('img/usb.gif', 'Tentacle USB');
-new Product('img/water-can.jpg', 'Self-Watering Can');
-new Product('img/wine-glass.jpg', 'Terrarium Style Wine Glass');
+function createProductLine(){
+  new Product('img/bag.jpg', 'Robot Suitcase');
+  new Product('img/banana.jpg', 'Banana Slicer');
+  new Product('img/bathroom.jpg', '2-in-1 Tablet Holder and Toilet Paper Dispenser');
+  new Product('img/boots.jpg', 'Toeless Boots');
+  new Product('img/breakfast.jpg', 'All in One Breakfast Maker');
+  new Product('img/bubblegum.jpg', 'Meatball Bubblegum');
+  new Product('img/chair.jpg', 'Standing Chair');
+  new Product('img/cthulhu.jpg', 'Cthulhu Figurine');
+  new Product('img/dog-duck.jpg', 'Dog Bill');
+  new Product('img/dragon.jpg', 'Dragon Meat, 19oz');
+  new Product('img/pen.jpg', 'Cutlery Pens');
+  new Product('img/pet-sweep.jpg', 'Animal Powered Debris Removal System');
+  new Product('img/scissors.jpg', 'Pizza Scissors');
+  new Product('img/shark.jpg', 'Great White Sleeping Bag');
+  new Product('img/sweep.png', 'Infant Powered Debris Removal System');
+  new Product('img/tauntaun.jpg', 'Eviscerated Tauntaun Sleeping Bag');
+  new Product('img/unicorn.jpg', 'Unicorn Meat, 5.5oz');
+  new Product('img/usb.gif', 'Tentacle USB');
+  new Product('img/water-can.jpg', 'Self-Watering Can');
+  new Product('img/wine-glass.jpg', 'Terrarium Style Wine Glass');
+}
 
 console.log('Product Collection',Product.collection);
 
@@ -95,6 +106,7 @@ productImgSection.addEventListener('click', handleChoiceClick);
 function handleChoiceClick(event){
   if(event.target.tagName === 'IMG'){
     totalClicks++;
+    saveToLocalStorage();
 
     var targetSrc = event.target.getAttribute('src');
     for(var i = 0; i < Product.collection.length; i++){
@@ -106,7 +118,7 @@ function handleChoiceClick(event){
     if (totalClicks === maxClicks){
       alert('Thanks for your input!  Take a look at the results to your left.')
       productImgSection.removeEventListener('click', handleChoiceClick);
-      // toggleResults();
+      toggleIntro();
       printResults();
       renderResultsChart();
     }
@@ -233,6 +245,13 @@ function printResults(){
 
 function renderResultsChart(){
 
+  var target = document.getElementById('intro');
+  var chart = document.createElement('canvas');
+  chart.id = 'myChart';
+  chart.width = '400px';
+  chart.height = '400px';
+  target.appendChild(chart);
+
   var chartLabels = [];
   for (var i = 0; i < Product.collection.length; i++){
     chartLabels.push(Product.collection[i].productName)
@@ -276,29 +295,24 @@ function renderResultsChart(){
     options: {}
   });
 }
+// ==================================Save Votes to Local Storage ========================================
+
+function saveToLocalStorage(){
+  var stringyProductCollection = JSON.stringify(Product.collection);
+  console.log('string array', stringyProductCollection);
+
+  localStorage.setItem('priorVotes', stringyProductCollection);
+}
+
+
 
 // ==================================Toggle Visibility========================================
 // https://www.washington.edu/accesscomputing/webd2/student/unit5/module2/lesson5.html
 
-// function toggleResults() {
+function toggleIntro() {
 
-//   var results = document.getElementById('resultsArticle');
-//   var intro = document.getElementById('intro');
+  var intro = document.getElementById('textBlock');
   
-//   if(displaySetting == 'block'){
-//     results.style.display='none';
-//   } else {
-//     results.style.display='block';
-//   }
+  intro.style.display='none';
 
-
-  // var displaySetting = results.style.display;
-  // var introSetting = intro.style.display;
-
-  // if(introSetting == 'block'){
-  //   results.style.display='none';
-  // } else {
-  //   results.style.display='block';
-  // }
-
-// }
+}

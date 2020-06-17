@@ -1,26 +1,22 @@
 * {
-  border: 1px black solid;
+  /* border: 1px black solid; */
   box-sizing: border-box;
 }
 
 h1, h2 {
   text-align: center;
+  background-color: #ffe629;
 }
 
 #resultsColumn {
   overflow: hidden;
-  background-color: lightblue;
+  background-color: lightsteelblue;
   float: left;
   width: 25%;
 }
 
-/* #resultsColumn article {
-  float: left;
-  width: 25%; */
-}
-
 #resultsArticle {
-  /* display: none; */
+  border: dotted steelblue 3px;
 }
 
 figure {
@@ -32,15 +28,9 @@ figure {
 
 img {
   width: 100%;
+  max-height: 30vw;
 }
 
-#textBlock {
-  display: inline-block;
-  text-align: justify;
-  width: 50vw;
-  margin-left: 40%;
-  margin-right: 15%;
-}
 
 #mychart {
   margin-left: auto;
@@ -49,7 +39,18 @@ img {
 
 #intro {
   overflow: hidden;
-  background-color: lightpink;
   float: right;
   width: 75%;
+  height: 40vw;
+}
+          
+  #textBlock {
+    display: inline-block;
+    text-align: justify;
+    width: 50vw;
+    margin-left: 20%;
+    margin-right: 20%;
+    padding: 2vw;
+    background-color: lightsteelblue;
+  
 }

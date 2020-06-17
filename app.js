@@ -118,7 +118,7 @@ function handleChoiceClick(event){
     if (totalClicks === maxClicks){
       alert('Thanks for your input!  Take a look at the results to your left.')
       productImgSection.removeEventListener('click', handleChoiceClick);
-      // toggleResults();
+      toggleIntro();
       printResults();
       renderResultsChart();
     }
@@ -309,27 +309,10 @@ function saveToLocalStorage(){
 // ==================================Toggle Visibility========================================
 // https://www.washington.edu/accesscomputing/webd2/student/unit5/module2/lesson5.html
 
-// function toggleResults() {
+function toggleIntro() {
 
-//   var results = document.getElementById('resultsArticle');
-//   var intro = document.getElementById('intro');
+  var intro = document.getElementById('textBlock');
   
-//   if(displaySetting == 'block'){
-//     results.style.display='none';
-//   } else {
-//     results.style.display='block';
-//   }
+  intro.style.display='none';
 
-
-  // var displaySetting = results.style.display;
-  // var introSetting = intro.style.display;
-
-  // if(introSetting == 'block'){
-  //   results.style.display='none';
-  // } else {
-  //   results.style.display='block';
-  // }
-
-// }
-
-renderResultsChart();
+}

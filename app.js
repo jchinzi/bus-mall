@@ -1,8 +1,10 @@
 // ===========================Global Variables===========================
 
-var productsCollection = [];
+Product.collection = [];
 var totalClicks = 0;
 var maxClicks = 25;
+var randomArray = [];
+var altRandomArray = [];
 
 // ===========================Basic Functions===========================
 
@@ -18,7 +20,7 @@ function Product(imgSrc, productName){
   this.imgSrc = imgSrc;
   this.productName = productName;
 
-  productsCollection.push(this);
+  Product.collection.push(this);
 }
 
 new Product('img/bag.jpg', 'Robot Suitcase');
@@ -42,7 +44,47 @@ new Product('img/usb.gif', 'Tentacle USB');
 new Product('img/water-can.jpg', 'Self-Watering Can');
 new Product('img/wine-glass.jpg', 'Terrarium Style Wine Glass');
 
-console.log('Product Collection',productsCollection);
+console.log('Product Collection',Product.collection);
+
+// ===========================Random Array Function===========================
+
+function fillRandomArray(){
+
+  randomArray = [];
+
+  while (randomArray.length<3){
+
+    var randomIndex = Math.floor(Math.random() * Product.collection.length);
+
+    if (randomArray.indexOf(randomIndex) !== -1){
+      var randomIndex = Math.floor(Math.random() * Product.collection.length);
+    } else {
+    randomArray.push(randomIndex)
+    }
+  }
+};
+
+fillRandomArray();
+console.log('Primary Array', randomArray)
+
+// ===========================Reroll Random Array Function===========================
+
+function rerollRandomArray(){
+
+  altRandomArray = [];
+
+  while (altRandomArray.length<3){
+
+    var randomIndex = Math.floor(Math.random() * Product.collection.length);
+
+    if ((altRandomArray.indexOf(randomIndex) !== -1) || (randomArray.indexOf(randomIndex) !== -1)){
+      var randomIndex = Math.floor(Math.random() * Product.collection.length);
+    } else {
+      altRandomArray.push(randomIndex)
+    }
+  }
+  randomArray.splice(0, 3, altRandomArray[0], altRandomArray[1], altRandomArray[2]);
+};
 
 // ===========================Event Listener===========================
 
@@ -54,10 +96,10 @@ function handleChoiceClick(event){
     totalClicks++;
 
     var targetSrc = event.target.getAttribute('src');
-    for(var i = 0; i < productsCollection.length; i++){
-      if (productsCollection[i].imgSrc === targetSrc){
-        // console.log('it was', productsCollection[i]);
-        productsCollection[i].clicked++;
+    for(var i = 0; i < Product.collection.length; i++){
+      if (Product.collection[i].imgSrc === targetSrc){
+        // console.log('it was', Product.collection[i]);
+        Product.collection[i].clicked++;
       }
     }
 
@@ -73,24 +115,76 @@ function handleChoiceClick(event){
   rerenderProductImages();
 }
 
+// ===========================Function to Display Initial Images===========================
+
+function displayInitialProducts(){
+
+  fillRandomArray();
+  leftProductIndex = randomArray[0];
+  centerProductIndex = randomArray[1];
+  rightProductIndex = randomArray[2];
+
+  var productDisplayWindow = document.getElementById('products');
+
+  //Left Product
+  var figureElement = document.createElement('figure');
+
+  var leftproductImage = document.createElement('IMG');
+  leftproductImage.src = Product.collection[leftProductIndex].imgSrc;
+  leftproductImage.id = 'left-img';
+  figureElement.appendChild(leftproductImage);
+
+  var leftproductTitle = document.createElement('figcaption');
+  leftproductTitle.textContent = Product.collection[leftProductIndex].productName;
+  leftproductTitle.id = 'left-text';
+  figureElement.appendChild(leftproductTitle);
+
+  productDisplayWindow.appendChild(figureElement);
+
+//Center Product
+figureElement = document.createElement('figure');
+
+var centerProductImage = document.createElement('IMG');
+centerProductImage.src = Product.collection[centerProductIndex].imgSrc;
+centerProductImage.id = 'center-img';
+figureElement.appendChild(centerProductImage);
+
+var centerProductTitle = document.createElement('figcaption');
+centerProductTitle.textContent = Product.collection[centerProductIndex].productName;
+centerProductTitle.id = 'center-text';
+figureElement.appendChild(centerProductTitle);
+
+productDisplayWindow.appendChild(figureElement);
+
+//Right Product
+figureElement = document.createElement('figure');
+
+var rightproductImage = document.createElement('IMG');
+rightproductImage.src = Product.collection[rightProductIndex].imgSrc;
+rightproductImage.id = 'right-img';
+figureElement.appendChild(rightproductImage);
+
+var rightproductTitle = document.createElement('figcaption');
+rightproductTitle.textContent = Product.collection[rightProductIndex].productName;
+rightproductTitle.id = 'right-text';
+figureElement.appendChild(rightproductTitle);
+
+productDisplayWindow.appendChild(figureElement);
+
+}
+
+displayInitialProducts();
+
 // ===========================Function to Cycle Products Displayed===========================
 
 
 function rerenderProductImages(){
-  var leftRandom = pickRandom(0, productsCollection.length);
 
-  var middleRandom = pickRandom(0, productsCollection.length);
+  rerollRandomArray();
 
-  while(middleRandom === leftRandom){
-    middleRandom = pickRandom(0, productsCollection.length);
-  }
-
-  var rightRandom = pickRandom(0, productsCollection.length);
-
-  while(rightRandom === leftRandom || rightRandom === middleRandom){
-    rightRandom = pickRandom(0, productsCollection.length);
-  }
-  console.log('Random Product Index', leftRandom, middleRandom, rightRandom);
+  var leftProductIndex = randomArray[0];
+  var centerProductIndex = randomArray[1];
+  var rightProductIndex = randomArray[2];
   
   var leftImage = document.getElementById('left-img');
   var leftText = document.getElementById('left-text');
@@ -101,17 +195,17 @@ function rerenderProductImages(){
   var rightImage = document.getElementById('right-img');
   var rightText = document.getElementById('right-text');
   
-  leftImage.src = productsCollection[leftRandom].imgSrc;
-  leftText.textContent = productsCollection[leftRandom].productName;
-  productsCollection[leftRandom].shown++;
+  leftImage.src = Product.collection[leftProductIndex].imgSrc;
+  leftText.textContent = Product.collection[leftProductIndex].productName;
+  Product.collection[leftProductIndex].shown++;
   
-  middleImage.src = productsCollection[middleRandom].imgSrc;
-  middleText.textContent = productsCollection[middleRandom].productName;
-  productsCollection[middleRandom].shown++;
+  middleImage.src = Product.collection[centerProductIndex].imgSrc;
+  middleText.textContent = Product.collection[centerProductIndex].productName;
+  Product.collection[centerProductIndex].shown++;
   
-  rightImage.src = productsCollection[rightRandom].imgSrc;
-  rightText.textContent = productsCollection[rightRandom].productName;
-  productsCollection[rightRandom].shown++;
+  rightImage.src = Product.collection[rightProductIndex].imgSrc;
+  rightText.textContent = Product.collection[rightProductIndex].productName;
+  Product.collection[rightProductIndex].shown++;
 }
   
 // ===========================Function to Render Results===========================
@@ -119,13 +213,13 @@ function rerenderProductImages(){
 function printResults(){
 
   var resultsUL = document.getElementById('results');
-  for (var i = 0; i < productsCollection.length; i++){
+  for (var i = 0; i < Product.collection.length; i++){
 
   var resultsLI = document.createElement('li');
 
   var productResult = document.createElement('p');
 
-    productResult.textContent = (productsCollection[i].productName + ' had ' + productsCollection[i].clicked + ' votes and was shown ' + productsCollection[i].shown + ' times');
+    productResult.textContent = (Product.collection[i].productName + ' had ' + Product.collection[i].clicked + ' votes and was shown ' + Product.collection[i].shown + ' times');
  
     resultsLI.appendChild(productResult);
     

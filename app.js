@@ -3,7 +3,8 @@
 Product.collection = [];
 var totalClicks = 0;
 var maxClicks = 25;
-var randomArray = []
+var randomArray = [];
+var altRandomArray = [];
 
 // ===========================Basic Functions===========================
 
@@ -61,11 +62,29 @@ function fillRandomArray(){
     randomArray.push(randomIndex)
     }
   }
-}
+};
 
 fillRandomArray();
-// console.log('Random Array', randomArray);
+console.log('Primary Array', randomArray)
 
+// ===========================Reroll Random Array Function===========================
+
+function rerollRandomArray(){
+
+  altRandomArray = [];
+
+  while (altRandomArray.length<3){
+
+    var randomIndex = Math.floor(Math.random() * Product.collection.length);
+
+    if ((altRandomArray.indexOf(randomIndex) !== -1) || (randomArray.indexOf(randomIndex) !== -1)){
+      var randomIndex = Math.floor(Math.random() * Product.collection.length);
+    } else {
+      altRandomArray.push(randomIndex)
+    }
+  }
+  randomArray.splice(0, 3, altRandomArray[0], altRandomArray[1], altRandomArray[2]);
+};
 
 // ===========================Event Listener===========================
 
@@ -160,20 +179,12 @@ displayInitialProducts();
 
 
 function rerenderProductImages(){
-  var leftRandom = pickRandom(0, Product.collection.length);
 
-  var middleRandom = pickRandom(0, Product.collection.length);
+  rerollRandomArray();
 
-  while(middleRandom === leftRandom){
-    middleRandom = pickRandom(0, Product.collection.length);
-  }
-
-  var rightRandom = pickRandom(0, Product.collection.length);
-
-  while(rightRandom === leftRandom || rightRandom === middleRandom){
-    rightRandom = pickRandom(0, Product.collection.length);
-  }
-  // console.log('Random Product Index', leftRandom, middleRandom, rightRandom);
+  var leftProductIndex = randomArray[0];
+  var centerProductIndex = randomArray[1];
+  var rightProductIndex = randomArray[2];
   
   var leftImage = document.getElementById('left-img');
   var leftText = document.getElementById('left-text');
@@ -184,17 +195,17 @@ function rerenderProductImages(){
   var rightImage = document.getElementById('right-img');
   var rightText = document.getElementById('right-text');
   
-  leftImage.src = Product.collection[leftRandom].imgSrc;
-  leftText.textContent = Product.collection[leftRandom].productName;
-  Product.collection[leftRandom].shown++;
+  leftImage.src = Product.collection[leftProductIndex].imgSrc;
+  leftText.textContent = Product.collection[leftProductIndex].productName;
+  Product.collection[leftProductIndex].shown++;
   
-  middleImage.src = Product.collection[middleRandom].imgSrc;
-  middleText.textContent = Product.collection[middleRandom].productName;
-  Product.collection[middleRandom].shown++;
+  middleImage.src = Product.collection[centerProductIndex].imgSrc;
+  middleText.textContent = Product.collection[centerProductIndex].productName;
+  Product.collection[centerProductIndex].shown++;
   
-  rightImage.src = Product.collection[rightRandom].imgSrc;
-  rightText.textContent = Product.collection[rightRandom].productName;
-  Product.collection[rightRandom].shown++;
+  rightImage.src = Product.collection[rightProductIndex].imgSrc;
+  rightText.textContent = Product.collection[rightProductIndex].productName;
+  Product.collection[rightProductIndex].shown++;
 }
   
 // ===========================Function to Render Results===========================

@@ -6,6 +6,13 @@ var maxClicks = 25;
 var randomArray = [];
 var altRandomArray = [];
 
+var stringyPriorVotes = localStorage.getItem('priorVotes');
+var priorVotes = JSON.parse(stringyPriorVotes);
+
+if(priorVotes){
+  Product.collection = priorVotes;
+}
+
 // ===========================Basic Functions===========================
 
 function pickRandom(min, max){
@@ -95,6 +102,7 @@ productImgSection.addEventListener('click', handleChoiceClick);
 function handleChoiceClick(event){
   if(event.target.tagName === 'IMG'){
     totalClicks++;
+    saveToLocalStorage();
 
     var targetSrc = event.target.getAttribute('src');
     for(var i = 0; i < Product.collection.length; i++){
@@ -276,6 +284,16 @@ function renderResultsChart(){
     options: {}
   });
 }
+// ==================================Save Votes to Local Storage ========================================
+
+function saveToLocalStorage(){
+  var stringyProductCollection = JSON.stringify(Product.collection);
+  console.log('string array', stringyProductCollection);
+
+  localStorage.setItem('priorVotes', stringyProductCollection);
+}
+
+
 
 // ==================================Toggle Visibility========================================
 // https://www.washington.edu/accesscomputing/webd2/student/unit5/module2/lesson5.html

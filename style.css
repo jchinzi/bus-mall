@@ -26,3 +26,8 @@ img {
 #textBlock {
   display: inline-block;
 }
+
+#mychart {
+  margin-left: auto;
+  margin-right: auto;
+}

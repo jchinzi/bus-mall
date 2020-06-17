@@ -68,6 +68,7 @@ fillRandomArray();
 console.log('Primary Array', randomArray)
 
 // ===========================Reroll Random Array Function===========================
+// https://www.javascripttutorial.net/javascript-array-splice/
 
 function rerollRandomArray(){
 
@@ -107,6 +108,7 @@ function handleChoiceClick(event){
       alert('Thanks for your input!  Take a look at the results to your left.')
       productImgSection.removeEventListener('click', handleChoiceClick);
       printResults();
+      renderResultsChart();
     }
     
   } else {
@@ -227,4 +229,52 @@ function printResults(){
   }
 
 }
+// ==================================Bar Graph========================================
 
+function renderResultsChart(){
+
+  var chartLabels = [];
+  for (var i = 0; i < Product.collection.length; i++){
+    chartLabels.push(Product.collection[i].productName)
+  }
+
+  var clicksData = [];
+  for (var i = 0; i < Product.collection.length; i++){
+    clicksData.push(Product.collection[i].clicked)
+  }
+
+  var shownData = [];
+  for (var i = 0; i < Product.collection.length; i++){
+    shownData.push(Product.collection[i].shown)
+  }
+
+  var ctx = document.getElementById('myChart').getContext('2d');
+  var chart = new Chart(ctx, {
+    // The type of chart we want to create
+    type: 'bar',
+    
+    // The data for our dataset
+    data: {
+      labels: chartLabels,
+      datasets: [{
+        label: 'Times Displayed',
+        backgroundColor: 'light gray',
+        borderColor: 'dark gray',
+        data: shownData,
+      },
+
+      {
+        label: 'Times Chosen',
+        backgroundColor: 'gold',
+        borderColor: 'silver',
+        data: clicksData,
+      }]
+
+    },
+    
+    // Configuration options go here
+    options: {}
+  });
+}
+
+renderResultsChart();

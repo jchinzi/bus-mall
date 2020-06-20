@@ -2,7 +2,7 @@
 
 Product.collection = [];
 var totalClicks = 0;
-var maxClicks = 5;
+var maxClicks = 25;
 var randomArray = [];
 var altRandomArray = [];
 
@@ -124,7 +124,7 @@ function handleChoiceClick(event){
     }
     
   } else {
-    alert('Please click on your favorite product of the three shown'); //TODO: This doesn't seem to be happening
+    alert('Please click on your favorite product of the three shown');
   }
   rerenderProductImages();
 }
